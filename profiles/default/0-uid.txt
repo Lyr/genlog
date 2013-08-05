@@ -1,0 +1,6 @@
+USER_ID="toto"
+USER_ID="tata"
+USER_ID="titi"
+USER_ID="zorro"
+USER_ID="star"
+USER_ID="sun"
