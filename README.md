@@ -51,10 +51,11 @@ A logstash configuration file is given as an example to feed an elasticsearch da
 Another example of a simple generator.
 
 # Usage
-    genlog.sh [-h] [-m <int_value>] [-t <decimal_value>] [-b <int_value> [-r]] [-p <profile>])
+    genlog.sh [-h] [-m <int_value>] [-t <decimal_value>] [-b <int_value> [-r]] [-p <profile>] [-c <es-host>])
       -m: Number of raw log to fire (Default is 5000)
       -t: Sleep time between each raw log (Default is 0.5 seconds)
       -b: batch size (default is none). Perform a special action each time the batch size is reached.
       -r: Randomize batch size (b is mandatory and its value will be the maximum random value).
       -p: Profile name. Must match a directory name under resources (Default is default).
+      -c: Elasticsearch Host where the log are be sended with the curl command line with -XPOST argument.
 

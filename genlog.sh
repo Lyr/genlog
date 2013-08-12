@@ -15,6 +15,11 @@ _log ()
     echo "$MESSAGE"
 }
 
+_curl ()
+{
+	curl -v -XPOST ${host_name} -d "$MESSAGE"
+}
+
 _info ()
 {
     printf "$*\n" >&2
@@ -88,7 +93,7 @@ default_profile_name="default"
 randomize_batch_size=
 test -d "${log_dir}" || mkdir -p "${log_dir}"
 
-while getopts hrm:t:b:p: flag; do
+while getopts hrm:t:b:p:c: flag; do
     case ${flag} in
         h)
             _info "usage: genlog.sh [-h] [-m <int_value>] [-t <decimal_value>] [-b <int_value> [-r]] [-p <profile>])"
@@ -97,6 +102,7 @@ while getopts hrm:t:b:p: flag; do
             _info "  -b: batch size (default is none). Perform a special action each time the batch size is reached."
             _info "  -r: Randomize batch size ('b' is mandatory and its value will be the maximum random value)."
             _info "  -p: Profile name. Must match a directory name under resources (Default is ${default_profile_name})."
+            _info "  -c: Elasticsearch Host where the log are be sended with the curl command line with -XPOST argument."
             exit 0
             ;;
         m)  max_occurs=$OPTARG;;
@@ -104,6 +110,7 @@ while getopts hrm:t:b:p: flag; do
         b)  batch_size=$OPTARG;;
         r)  randomize_batch_size=y;;
         p)  profile_name=$OPTARG;;
+        c)  host_name=$OPTARG;;
     esac
 done
 
@@ -184,6 +191,10 @@ do
     _on_log
     _loadresources
     _log
+	if [ -n "${host_name}" ]
+	then
+		_curl
+	fi
     test ${occur} -eq ${max_occurs} || sleep ${sleep_duration} & 
     if [ -n "${current_batch_size}" ]
     then
