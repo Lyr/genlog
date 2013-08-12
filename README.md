@@ -57,5 +57,6 @@ Another example of a simple generator.
       -b: batch size (default is none). Perform a special action each time the batch size is reached.
       -r: Randomize batch size (b is mandatory and its value will be the maximum random value).
       -p: Profile name. Must match a directory name under resources (Default is default).
-      -c: Elasticsearch Host where the log are be sended with the curl command line with -XPOST argument.
+      -e: Elasticsearch Host where the log are be sended with the curl command line with -XPOST argument.
+      -l: Logstash host where the log are be sended with the curl command to the LogsStash server.
 
