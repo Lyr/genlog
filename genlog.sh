@@ -50,7 +50,7 @@ _loadresources ()
     do
         rname=`basename ${resource} ".txt" | tr '-' '_'`
         eval "max_line=\${max_${rname}}"
-        test -z "${max_line}" && max_line=`wc -l "${resource}" | cut -d' ' -f1` && eval "export max_${rname}=\${max_line}"
+        test -z "${max_line}" && max_line=`wc -l "${resource}" | sed 's/^[ \t]*//' | cut -d' ' -f1` && eval "export max_${rname}=\${max_line}"
         random_line=`_randomize ${max_line}`
         eval `sed -n -e "${random_line}p" -e "${random_line}q" "${resource}"`
     done < /tmp/genlog_$$.resources.txt
